@@ -18,7 +18,7 @@ export default function Home() {
       />
 
       <div className='z-10 border rounded-lg max-w-5xl w-full min-h-[85vh] text-sm lg:flex'>
-        <ChatLayout defaultLayout={defaultLayout} users={users} />
+        <ChatLayout defaultLayout={defaultLayout} />
       </div>
   </main>
   );
