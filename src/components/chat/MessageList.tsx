@@ -6,6 +6,7 @@ import { useSelectedUser } from '@/store/useSelectedUser'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import { useQuery } from '@tanstack/react-query'
 import { getMessages } from '@/actions/message.actions'
+import MessageSkeleton from '../skeletons/MessageSkeleton'
 
 const MessageList = () => {
     const { selectedUser } = useSelectedUser();
@@ -86,6 +87,14 @@ const MessageList = () => {
 							</div>
                 </motion.div>
             ))}
+
+            {isMessagesLoading && (
+					<>
+						<MessageSkeleton />
+						<MessageSkeleton />
+						<MessageSkeleton />
+					</>
+			)}
         </AnimatePresence>
     </div>
   )
