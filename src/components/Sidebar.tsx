@@ -9,6 +9,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/t
 import { cn } from '@/lib/utils';
 import { LogOut } from 'lucide-react';
 import { useSelectedUser } from '@/store/useSelectedUser';
+import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 
 interface SidebarProps {
     isCollapsed: boolean;
@@ -107,9 +108,9 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
 						</div>
 					)}
 					<div className='flex'>
-						<Button>
+						<LogoutLink>
 							<LogOut size={22} cursor={"pointer"} />
-						</Button>
+						</LogoutLink>
 					</div>
 				</div>
 			</div>
