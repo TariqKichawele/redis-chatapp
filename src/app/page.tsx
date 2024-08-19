@@ -12,7 +12,7 @@ async function getUsers(): Promise<User[]> {
 
   do{
       const [ nextCursor, keys ] = await redis.scan(cursor, {
-        match: 'users:*',
+        match: 'user:*',
         type: 'hash',
         count: 100
       });
@@ -46,6 +46,9 @@ export default async function Home() {
   const { isAuthenticated } = getKindeServerSession();
 	if (!(await isAuthenticated())) return redirect("/auth");
 
+  const users = await getUsers();
+  console.log(users);  // Debugging: List of users in the database
+
   return (
     <main className='flex h-screen flex-col items-center justify-center p-4 md:px-24 py-32 gap-4'>
       <PreferencesTab />
@@ -58,7 +61,7 @@ export default async function Home() {
       />
 
       <div className='z-10 border rounded-lg max-w-5xl w-full min-h-[85vh] text-sm lg:flex'>
-        <ChatLayout defaultLayout={defaultLayout} />
+        <ChatLayout defaultLayout={defaultLayout} users={users}/>
       </div>
   </main>
   );

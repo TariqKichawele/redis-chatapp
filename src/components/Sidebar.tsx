@@ -1,5 +1,5 @@
 import React from 'react'
-import { USERS } from '@/db/dummy';
+import { USERS, User } from '@/db/dummy';
 import useSound from 'use-sound';
 import { usePreferences } from '@/store/usePreferences';
 import { ScrollArea } from './ui/scroll-area';
@@ -10,16 +10,19 @@ import { cn } from '@/lib/utils';
 import { LogOut } from 'lucide-react';
 import { useSelectedUser } from '@/store/useSelectedUser';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 interface SidebarProps {
     isCollapsed: boolean;
+	users: User[];
 }
 
-const Sidebar = ({ isCollapsed }: SidebarProps) => {
+const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
     const [ playClickSound ] = useSound("/sounds/mouse-click.mp3");
     const { soundEnabled } = usePreferences();
     const { selectedUser, setSelectedUser } = useSelectedUser();
-    const users = USERS;
+
+	const { user } = useKindeBrowserClient()
 
   return (
     <div className='group relative flex flex-col h-full gap-4 p-2 data-[collapsed=true]:p-2  max-h-full overflow-auto bg-background'>
@@ -71,6 +74,7 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
 							)}
 							onClick={() => {
 								soundEnabled && playClickSound();
+								setSelectedUser(user);
 							}}
 						>
 							<Avatar className='flex justify-center items-center'>
@@ -103,7 +107,7 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
 								/>
 							</Avatar>
 							<p className='font-bold'>
-								Tariq K
+								{user?.given_name} {user?.family_name}
 							</p>
 						</div>
 					)}
